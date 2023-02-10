@@ -3,11 +3,12 @@ import { pokemonAPI } from '../api/pokemonAPI';
 import { PokemonPaginatedResponse, Result, SimplePokemon } from "../interfaces/pokemonInterfaces";
 
 export const usePokemonPaginated = () => {
+
     const [isLoading, setIsLoading] = useState(true);
     const [simplePokemonList, setSimplePokemonList] = useState<SimplePokemon[]>([]);
     const nextPageUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=40');
 
-    const loadPokemons = async () => {
+    const loadPokemons = async() => {
         setIsLoading(true);
         const resp = await pokemonAPI.get<PokemonPaginatedResponse>(nextPageUrl.current);
         nextPageUrl.current = resp.data.next;
@@ -37,7 +38,7 @@ export const usePokemonPaginated = () => {
 
     return {
         isLoading, 
-        loadPokemons,
         simplePokemonList,
+        loadPokemons,
     }
 }
